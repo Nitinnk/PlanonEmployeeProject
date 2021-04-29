@@ -8,16 +8,7 @@ public class Employee implements IEmployee{
 	private int id;
 	private double salary;
 	private Address address;
-	Employee(String name)
-	{
-		this.name=name;
-	}
-	Employee(String name,String type)
-	{
-		this.name=name;
-		this.type=type;
-	}
-	Employee(int id,String name,String type,Address address,double salary)
+	public Employee(int id,String name,String type,Address address,double salary)
 	{
 		this.name=name;
 		this.type=type;

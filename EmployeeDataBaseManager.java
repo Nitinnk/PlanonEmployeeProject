@@ -1,10 +1,8 @@
 package employee;
-
 import java.util.*;
-
 public class EmployeeDataBaseManager {
-	EmployeeDBList edbl;
-	EmployeeDataBaseManager(EmployeeDBList edbl)
+	private EmployeeDBList edbl;
+	public EmployeeDataBaseManager(EmployeeDBList edbl)
 	{
 		this.edbl=edbl;
 		edbl.addAllData();

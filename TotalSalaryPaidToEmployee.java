@@ -1,32 +1,36 @@
 package employee;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.util.Date;
+
 public class TotalSalaryPaidToEmployee {
-	Employee employee;
-	int month;
-	double totalSalary;
-	public TotalSalaryPaidToEmployee(IEmployee employee, int month) {
+	private Employee employee;
+	private double totalSalary;
+	private static LocalDate date;
+	public TotalSalaryPaidToEmployee(IEmployee employee, LocalDate date) {
 		this.employee=(Employee) employee;
-		this.month=month;
+		this.date=date;
 		this.totalSalary=checkTotalSalary( employee);
-		this.printTotalSalary();
 	}
 	public static double checkSalaryUtil(IEmployee p,int month)
 	{
+		System.out.println("Check total salary method");
 		double sum=0;
-		for(int i=1;i<=month;i++)
+		if(p.getType().equalsIgnoreCase("permanent"))
 		{
-			if(p.getType().equalsIgnoreCase("permanent"))
-			{
-				sum+=p.getSalary();
-			}
-			else
-			{
-				ContractEmployee c=new ContractEmployee(p.getId(),p.getName(),p.getType(),p.getSalary(),p.getAddress());
-				sum+=c.salaryToBePaid(0, i);
-			}
-			
+			System.out.println("Permanent case");
+			sum+=checkTotalSalaryOfPermanentEmployee((PermanentEmployee) p);
 		}
-		System.out.println("Total salary paid until now to "+p.getName() +" is "+sum);
+		else
+		{
+			for(int i=1;i<=month;i++)
+			{
+					ContractEmployee c=new ContractEmployee(p.getId(),p.getName(),p.getType(),p.getSalary(),p.getAddress());
+					sum+=c.salaryToBePaid(0, i);
+			}
+		}
+		
 		return sum;
 	}
 	public void printTotalSalary()
@@ -37,22 +41,63 @@ public class TotalSalaryPaidToEmployee {
 	{
 		return this.totalSalary;
 	}
+	public static double checkTotalSalaryOfPermanentEmployee(PermanentEmployee p)
+	{
+		int monthlyLeaves=1;
+		double sum=0;
+		LocalDate current=date;
+		LocalDate temp=p.getJoiningDate();
+		System.out.println("Current Date : "+current+" Date Of Joining : "+temp);
+		for (LocalDate date = temp; date.isBefore(current); date = date.plusMonths(1)) {
+			int leavesTaken=p.getNoOfLeavesInMonth(date.getMonthValue());
+			if(!p.isSenior(date))
+			{
+				if(leavesTaken<=monthlyLeaves)
+				{
+					sum+=p.getSalary();
+					monthlyLeaves+=Math.abs(monthlyLeaves-leavesTaken);
+				}
+				else
+				{
+					leavesTaken-=monthlyLeaves;
+					monthlyLeaves=1;
+					double temp1=p.deductBaseSalary(leavesTaken, temp.getMonthValue());
+					sum+=temp1;
+				}
+			}
+			if(p.isSenior(date))
+			{
+				monthlyLeaves+=monthlyLeaves+2;
+				if(leavesTaken<=monthlyLeaves)
+				{
+					sum+=p.getSalary();
+					monthlyLeaves+=Math.abs(monthlyLeaves-leavesTaken);
+				}
+				else
+				{
+					leavesTaken-=monthlyLeaves;
+					sum+=p.deductBaseSalary(leavesTaken, temp.getMonthValue());
+				}
+			}
+	    }
+		return sum;
+	}
 	public double checkTotalSalary(IEmployee p)
 	{
 		double sum=0;
-		for(int i=1;i<=month;i++)
+		if(p.getType().equalsIgnoreCase("permanent"))
 		{
-			if(p.getType().equalsIgnoreCase("permanent"))
+			sum+=checkTotalSalaryOfPermanentEmployee((PermanentEmployee) p);
+		}
+		else
+		{
+			for(int i=1;i<=date.getMonthValue();i++)
 			{
-				sum+=p.getSalary();
+					ContractEmployee c=new ContractEmployee(p.getId(),p.getName(),p.getType(),p.getSalary(),p.getAddress());
+					sum+=c.salaryToBePaid(0, i);
 			}
-			else
-			{
-				ContractEmployee c=new ContractEmployee(p.getId(),p.getName(),p.getType(),p.getSalary(),p.getAddress());
-				sum+=c.salaryToBePaid(0, i);
-			}
-			
 		}
 		return sum;
 	}
+	
 }

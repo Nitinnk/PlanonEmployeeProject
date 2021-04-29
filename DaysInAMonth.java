@@ -1,11 +1,9 @@
 package employee;
 
 public class DaysInAMonth {
-	
 	 int month=0; 
      String MonthOfName;
-     
-     DaysInAMonth(int month)
+     public DaysInAMonth(int month)
      {
     	 this.month=month;
      }

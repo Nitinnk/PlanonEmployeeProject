@@ -1,8 +1,9 @@
 package employee;
 
+import java.time.LocalDate;
+
 public class ContractEmployee extends Employee  implements IEmployee{
-	private double salary;
-	ContractEmployee(int id,String name,String type,double salaryPerHour,Address address)
+	public ContractEmployee(int id,String name,String type,double salaryPerHour,Address address)
 	{
 		super(id,name,type,address,salaryPerHour);
 	}
@@ -35,7 +36,10 @@ public class ContractEmployee extends Employee  implements IEmployee{
 	}
 	public double salaryToBePaid(int leaves,int month)
 	{
-		
 		return this.getSalaryperMonth(leaves,month);
+	}
+	public double salaryToBePaid(int leaves,LocalDate date)
+	{
+		return this.getSalaryperMonth(leaves,date.getMonthValue());
 	}
 }

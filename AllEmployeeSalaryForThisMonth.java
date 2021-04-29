@@ -1,19 +1,21 @@
 package employee;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class AllEmployeeSalaryForThisMonth {
 	private EmployeeDataBaseManager edbl;
-	private int month;
-	AllEmployeeSalaryForThisMonth(EmployeeDataBaseManager edbl,int month)
+	private LocalDate date;
+	public AllEmployeeSalaryForThisMonth(EmployeeDataBaseManager edbl,LocalDate date)
 	{
 		this.edbl=edbl;
-		this.month=month;
-		printSalaries();
+		this.date=date;
 	}
 	public void printSalaries()
 	{
 		for(IEmployee p:edbl.getAllEmployeeList())
 		{
-			new TotalSalaryPaidToEmployee(p,this.month);
+			System.out.println("Total salary paid to "+p.getName()+" is"+new TotalSalaryPaidToEmployee(p,this.date).checkTotalSalary(p));
 		}		
 	}
 }

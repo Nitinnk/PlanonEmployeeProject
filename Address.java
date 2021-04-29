@@ -1,10 +1,9 @@
 package employee;
-
 public class Address {
 	private String areaName;
 	private String cityName;
 	private String pinCode;
-	Address(String areaName,String cityName,String pinCode)
+	public Address(String areaName,String cityName,String pinCode)
 	{
 		this.areaName=areaName;
 		this.cityName=cityName;

@@ -1,22 +1,28 @@
 package employee;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		Scanner in=new Scanner(System.in);
 		EmployeeDBList edbl1=EmployeeDBList.getInstance();
-		//edbl.addAllData();
 		EmployeeDataBaseManager edbl=new EmployeeDataBaseManager(edbl1);
-		//edbl.printAllEmployees();
 		/**
 		 * Employee ID's are 21,31,41,51,100,200,300,400,500.
 		 */
 		takeInputs(edbl,in);
-		
 	}
-	public static void takeInputs(EmployeeDataBaseManager edbl,Scanner in)
+	/**
+	 * Take Inputs will take the inputs from the user.
+	 * @param edbl
+	 * @param in
+	 * @throws ParseException
+	 */
+	public static void takeInputs(EmployeeDataBaseManager edbl,Scanner in) throws ParseException
 	{
 		System.out.println("Choose the operation number");
 		System.out.println("1-Print Details of all the employees");
@@ -24,7 +30,8 @@ public class Main {
 		System.out.println("3-Get total salary paid to one employee upto the current month");
 		System.out.println("4-Check the Amount of salary to be paid to an Employee");
 		System.out.println("5-All Employees salary for this month");
-		System.out.println("6-Exit");
+		System.out.println("6-Print All Leaves Taken by a Permanent employee");
+		System.out.println("7-Exit");
 		int choice=in.nextInt();
 		switch(choice)
 		{
@@ -33,13 +40,15 @@ public class Main {
 			askHomePage(edbl,in);
 			break;
 		case 2:
-			TotalSalaryCount tsc=new TotalSalaryCount(edbl,getMonth(in));
+			TotalSalaryCount tsc=new TotalSalaryCount(edbl,getDate(in));
+			tsc.printAllEmployeeSalaries();
 			askHomePage(edbl,in);
 			break;
 		case 3:
 			int eid=takeEID(edbl,in);
 			Employee employee=edbl.getCurrentEmployee(eid);
-			TotalSalaryPaidToEmployee t=new TotalSalaryPaidToEmployee(employee,getMonth(in));
+			TotalSalaryPaidToEmployee t=new TotalSalaryPaidToEmployee(employee,getDate(in));
+			t.printTotalSalary();
 			askHomePage(edbl,in);
 			break;
 		case 4:
@@ -48,32 +57,50 @@ public class Main {
 			String type=current.getType();
 			System.out.println("Enter the number of leaves taken : ");
 			int noOfLeaves=in.nextInt();
-			int month=getMonth(in);
-			SalaryToBePaidToEmployee ss=new SalaryToBePaidToEmployee(current,noOfLeaves,month);
+			SalaryToBePaidToEmployee ss=new SalaryToBePaidToEmployee(current,noOfLeaves,getDate(in));
+			ss.checkSalary();
 			askHomePage(edbl,in);
 			break;
 		case 5:
-			AllEmployeeSalaryForThisMonth aesftm=new AllEmployeeSalaryForThisMonth(edbl,getMonth(in));
+			AllEmployeeSalaryForThisMonth aesftm=new AllEmployeeSalaryForThisMonth(edbl,getDate(in));
+			aesftm.printSalaries();
 			askHomePage(edbl,in);
 			break;
 		case 6:
+			int eid6=takeEID(edbl,in);
+			IEmployee temp= edbl.getCurrentEmployee(eid6);
+			if(temp.getType().equalsIgnoreCase("contract"))
+			{
+				System.out.println("Contract Employee has only loss of pay");
+				askHomePage(edbl,in);
+			}
+			else
+			{
+				PermanentEmployee pemployee=(PermanentEmployee) edbl.getCurrentEmployee(eid6);
+				pemployee.printAllLeaves();
+				askHomePage(edbl,in);
+			}
+			break;
+		case 7:
 			System.exit(0);
-			default:
-				System.out.println("Invalid Input");
-				System.exit(0);
+		default:
+			System.out.println("Invalid Input");
+			System.exit(0);
 		}
 	}
 	public static int getMonth(Scanner in)
 	{
 		System.out.print("Enter the month : ");
 		return in.nextInt();
-		/*System.out.print("Enter the Date(yyyy/mm/dd) : ");
-		Date date = new Date(in.next());
-		//LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		int month=date.getMonth();
-		return month;*/
 	}
-	public static void askHomePage(EmployeeDataBaseManager edbl,Scanner in)
+	public static LocalDate getDate(Scanner in) throws ParseException
+	{
+		System.out.println("Enter the current Date(M/d/yyyy) : ");
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
+	    LocalDate date = LocalDate.parse(in.next(), dateFormat);
+		return date;
+	}
+	public static void askHomePage(EmployeeDataBaseManager edbl,Scanner in) throws ParseException
 	{
 		System.out.println("Choose Your Next Action ");
 		System.out.println("1 - Go back to home page");
@@ -113,7 +140,6 @@ public class Main {
 			}
 		}
 		return 0;
-			
 	}
 
 }
