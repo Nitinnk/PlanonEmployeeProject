@@ -11,6 +11,9 @@ public class AllEmployeeSalaryForThisMonth {
 		this.edbl=edbl;
 		this.date=date;
 	}
+	/**
+	 * printSalaries() method will print the aslaries of all employees this month.
+	 */
 	public void printSalaries()
 	{
 		for(IEmployee p:edbl.getAllEmployeeList())

@@ -46,6 +46,9 @@ public class Employee implements IEmployee{
 	{
 		return this.type;
 	}
+	/**
+	 * printDetails() method is used to print all the details of the Employee.
+	 */
 	public void printDetails()
 	{
 		System.out.println("Employee ID : "+this.getId()+" Employee Name : "+this.getName()+" Employee type : "+this.getType());

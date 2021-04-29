@@ -18,6 +18,9 @@ public class SalaryToBePaidToEmployee {
 		this.leaves=leaves;
 		this.date=date;
 	}
+	/**
+	 * checkSalary() method will check and print the salary to be paid to employee for that particular month.
+	 */
 	public void checkSalary()
 	{
 		switch(e.getType())

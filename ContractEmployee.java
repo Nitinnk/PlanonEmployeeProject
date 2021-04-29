@@ -7,12 +7,23 @@ public class ContractEmployee extends Employee  implements IEmployee{
 	{
 		super(id,name,type,address,salaryPerHour);
 	}
+	/**
+	 * printDetails method will print all the details of the contract employee.
+	 * This method is overriden from Employee class.
+	 */
 	public void printDetails()
 	{
 		System.out.println("Employee ID : "+this.getId()+"\tName : "+this.getName()+"\tAmount per Hour : "+this.getSalary()+"\tEmployee type : "+this.getType());
 		System.out.println("Address : ");
 		this.printEmployeeAddress();
 	}
+	/**
+	 * getSalaryperMonth(int days,int month) method will calculate and return the amount that needs to be paid to the contract employee for that month.
+	 * Return type: double.
+	 * @param days
+	 * @param month
+	 * @return
+	 */
 	public double getSalaryperMonth(int days,int month)
 	{
 		int daysInMonth=new DaysInAMonth(month).getNoOfDays();

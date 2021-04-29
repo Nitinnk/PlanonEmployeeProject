@@ -31,6 +31,10 @@ public class PermanentEmployee extends Employee implements IEmployee{
 	{
 		return this.dateOfJoining;
 	}
+	/**
+	 * printDetails method will print all the details of the permanent employee.
+	 * This method is overriden from Employee class.
+	 */
 	public void printDetails()
 	{
 		System.out.println("Employee ID : "+this.getId()+"\tName : "+this.getName()+"\tBaseSalary : "+this.getSalary()+"\tEmployee type : "+this.getType()+" Date of Joining is "+this.getJoiningDate());
@@ -42,6 +46,9 @@ public class PermanentEmployee extends Employee implements IEmployee{
 	{
 		return this.getSalary()/this.getDaysInMonth(month);
 	}
+	/**
+	 * deductLeaves() method will deduct the number of leaves taken from the total alloted leaves.(15).
+	 */
 	public void deductLeaves()
 	{
 		for(Map.Entry<Integer, Integer>entry:this.leaveObject.getLeaves().entrySet())
@@ -53,6 +60,13 @@ public class PermanentEmployee extends Employee implements IEmployee{
 	{
 		return this.totalLeavesAvailable;
 	}
+	/**
+	 * deductAmountmethod will deduct salary based on the number of leaves,number of available leaves and the current month.
+	 * return type:double
+	 * @param leaves
+	 * @param currentDate
+	 * @return
+	 */
 	public double deductAmount(int leaves,LocalDate currentDate)
 	{
 		if(this.isSenior(currentDate))
@@ -79,6 +93,12 @@ public class PermanentEmployee extends Employee implements IEmployee{
 	{
 		return new DaysInAMonth(month).getNoOfDays();
 	}
+	/**
+	 * isSenior method will check whether the employee has been working in the company for more than 6 months or not.
+	 * return type:boolean
+	 * @param current
+	 * @return
+	 */
 	public boolean isSenior(LocalDate current)
 	{
 		 long diffInMonths = ChronoUnit.MONTHS.between(this.getJoiningDate(), current);

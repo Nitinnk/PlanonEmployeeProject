@@ -18,6 +18,11 @@ public class EmployeeDataBaseManager {
 	{
 		return edbl.allEmployeeList;
 	}
+	/**
+	 * isPresent method will check wether the given Employee ID is present in the database or not.
+	 * @param eid
+	 * @return
+	 */
 	public boolean isPresent(int eid)
 	{
 		for(Employee e:edbl.allEmployeeList)
@@ -27,6 +32,11 @@ public class EmployeeDataBaseManager {
 		}
 		return false;
 	}
+	/**
+	 * printAllEmployeeDetails method will print all the employee details.
+	 * @param eid
+	 * @return
+	 */
 	public Employee printEmployeeDetails(int eid)
 	{
 		for(Employee e:edbl.allEmployeeList)
@@ -40,11 +50,16 @@ public class EmployeeDataBaseManager {
 		}
 		return null;
 	}
-	public Employee getCurrentEmployee(int eid)
+	/**
+	 * getCurrentEmployee method will return the employee object based on the given Employee ID
+	 * @param eid
+	 * @return
+	 */
+	public Employee getCurrentEmployee(int employeeId)
 	{
 		for(Employee e:edbl.allEmployeeList)
 		{
-			if(e.getId()==eid)
+			if(e.getId()==employeeId)
 			{
 				return e;
 			}	

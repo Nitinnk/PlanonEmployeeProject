@@ -20,6 +20,12 @@ public class Leaves {
 	{
 		return this.leaves.get(month);
 	}
+	/**
+	 * assignLeaves method will assign some Random leaves to the permanent employee.
+	 * @param joiningDate
+	 * @param current
+	 * @return
+	 */
 	public HashMap<Integer,Integer> assignLeaves(LocalDate joiningDate,LocalDate current)
 	{
 		if(this.leaves==null)
@@ -50,6 +56,9 @@ public class Leaves {
 		    }
 		return leaves;
 	}
+	/**
+	 * printLeaves method will print all the leaves in the leaves HashMap.
+	 */
 	public void printLeaves()
 	{
 		for(Map.Entry<Integer, Integer>entry:this.leaves.entrySet())

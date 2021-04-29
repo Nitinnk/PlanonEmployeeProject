@@ -10,6 +10,9 @@ public class TotalSalaryCount {
 		this.edbl=edbl;
 		this.date=date;
 	}
+	/**
+	 *  printAllEmployeeSalaries() will print all the employee salaries.
+	 */
 	public void printAllEmployeeSalaries()
 	{
 		for(IEmployee e:edbl.getAllEmployeeList())
@@ -17,6 +20,11 @@ public class TotalSalaryCount {
 			System.out.println("Total salary paid to "+e.getName()+" is "+checkThisMonthSalary(e));
 		}
 	}
+	/**
+	 * checkThisMonthSalary() will check the salary of one particular month.
+	 * @param e
+	 * @return
+	 */
 	public double checkThisMonthSalary(IEmployee e)
 	{
 		if(e.getType().equalsIgnoreCase("permanent"))

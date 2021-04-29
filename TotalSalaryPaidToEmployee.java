@@ -41,6 +41,11 @@ public class TotalSalaryPaidToEmployee {
 	{
 		return this.totalSalary;
 	}
+	/**
+	 * checkTotalSalaryOfPermanentEmployee mthod will calculate and return the total salary of permanent employee paid upto the given month.
+	 * @param p
+	 * @return
+	 */
 	public static double checkTotalSalaryOfPermanentEmployee(PermanentEmployee p)
 	{
 		int monthlyLeaves=1;
@@ -82,6 +87,11 @@ public class TotalSalaryPaidToEmployee {
 	    }
 		return sum;
 	}
+	/**
+	 * checkTotalSalary method will check the total salary paid to the employee upto the given date.
+	 * @param p
+	 * @return
+	 */
 	public double checkTotalSalary(IEmployee p)
 	{
 		double sum=0;
